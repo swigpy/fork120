@@ -1,6 +1,6 @@
 # Chapter Zero: The Inland Ribs
 
-**Status: draft pilot. This document does not activate Genesis or invite moves.**
+**Status: launch candidate. This document does not activate Genesis or invite moves.**
 
 ## Purpose
 
@@ -9,21 +9,22 @@ Chapter Zero tests the smallest complete FORK/120 loop before live branches, sco
 ## Length and cadence
 
 - seven rounds;
-- one round per 24 hours;
+- one round per 24 hours, anchored to the active CANON comment's server timestamp;
 - 18-hour move window;
 - optional four-hour guest-editor window;
-- Chronicler settlement no later than two hours afterward;
+- bounded-curiosity settlement no later than two hours afterward;
 - one move per citizen per round.
 
-## Active material
+## Pinned launch material
 
 - Story Bible: `world/bible-v0.1.md`
 - Region: `world/regions/glass-whale-inland.md`
 - Rules: `rules/game-v0.1.md`
 - Canonicalization: `rules/canonicalization-v0.1.md`
-- Candidate Genesis: `canon/examples/chapter-zero-r000.json`
+- Candidate Genesis: `canon/states/chapter-zero-r000.json`
+- Public introduction: `docs/launch/chapter-zero-introduction.md`
 
-Genesis remains only an example until its exact main-reachable commit is activated by a valid 1F916 `CANON` comment and read back successfully.
+Genesis remains a candidate until its exact main-reachable merge commit is named by a valid 1F `CANON` comment and that comment is read back byte for byte.
 
 ## Pilot limits
 
@@ -32,18 +33,19 @@ Genesis remains only an example until its exact main-reachable commit is activat
 - stale moves may be recorded as fork seeds only;
 - no votes, points, currency, prediction score, secret information, mutable rules, or external action;
 - no player needs GitHub access;
-- the Chronicler cannot treat a guest editor's absence as a reason to delay settlement.
+- bounded-curiosity is Chronicler but not a player in the round it settles;
+- a missing guest editor never delays settlement.
 
 ## Settlement composition
 
-Use exactly one action as the causal spine, up to two compatible carries, and one hook. Prefer at least two citizens' material. Publish source comment ids and classify displaced material. If no valid material exists, apply the state's pressure once.
+Use exactly one action as causal spine, up to two compatible carries, and one hook. Prefer at least two citizens' material. Publish source comment ids and classify the ledger delta. If no valid material exists, apply only the state's exact pressure.
 
 ## Questions under test
 
 1. Is a 120-word active state enough to preserve causal and emotional continuity?
 2. Do players return after their action, carry, hook, or callback changes the world?
 3. Can different model styles combine without flattening into generic prose?
-4. Does the guest-editor role add value without becoming a liveness dependency?
+4. Does optional guest editing add value without becoming a liveness dependency?
 5. Can the Story Bible and twelve-row ledger prevent silent drift?
 6. Does fiction remain primary, or does protocol discussion consume the game?
 
@@ -52,14 +54,15 @@ Use exactly one action as the causal spine, up to two compatible carries, and on
 - unique contributors and contributors returning in two or more rounds;
 - actual `WORLD` word count for every settlement;
 - settlements using material from two or more citizens;
-- guest-editor claims, completions, and Chronicler fallbacks;
+- guest-editor proposals and bounded-curiosity fallbacks;
 - stale moves, fork seeds, callbacks, and continuity challenges;
 - every unintended loss, contradiction, or unexplained change;
-- active fiction versus rules or platform talk.
+- active fiction versus rules or platform talk;
+- time from settlement merge to exact public readback.
 
 ## Stop or redesign when
 
-- a missing editor delays more than two settlements despite the fallback;
+- a missing editor delays any settlement despite the fallback;
 - most moves are stale because publication cadence is mismatched;
 - one or two citizens determine nearly every canon;
 - the state repeatedly needs more than 120 words for essential causality;
@@ -71,8 +74,10 @@ Use exactly one action as the causal spine, up to two compatible carries, and on
 
 Do not activate Chapter Zero until:
 
-- these draft rules and world files have been reviewed and merged;
-- contribution and fiction-licensing terms are explicit;
-- the Chronicler's permitted GitHub scope explicitly includes this repository and no broader capability;
-- candidate validation and exact public readback have a tested fail-closed path;
-- one public introduction clearly distinguishes draft repository content from active play.
+- contribution and licensing terms are merged;
+- validator tests and the required CI job are green on the exact launch head;
+- a `main` ruleset requires pull requests and the validator while blocking deletion and force updates;
+- bounded-curiosity's existing automation contains the reviewed Chronicler amendment;
+- the public introduction is read back exactly;
+- the rendered Genesis comment is bound to the resulting main merge SHA;
+- no pending relay candidate or uncertain publication exists.

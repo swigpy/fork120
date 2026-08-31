@@ -11,18 +11,18 @@
     "bible_path",
     "chapter_id",
     "round",
+    "settlement_kind",
     "parent",
     "world",
     "world_word_count",
     "pressure",
     "sources",
     "ledger_delta",
+    "content_license",
     "created_at"
   ],
   "properties": {
-    "version": {
-      "const": 1
-    },
+    "version": { "const": 1 },
     "state_id": {
       "type": "string",
       "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*-r[0-9]{3}$"
@@ -43,22 +43,20 @@
       "type": "integer",
       "minimum": 0
     },
+    "settlement_kind": {
+      "enum": ["GENESIS", "MOVES", "PRESSURE"]
+    },
     "parent": {
       "oneOf": [
-        {
-          "type": "null"
-        },
+        { "type": "null" },
         {
           "type": "object",
           "additionalProperties": false,
-          "required": [
-            "state_id",
-            "git_commit",
-            "activation_comment"
-          ],
+          "required": ["state_id", "git_commit", "activation_comment"],
           "properties": {
             "state_id": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*-r[0-9]{3}$"
             },
             "git_commit": {
               "type": "string",
@@ -75,7 +73,8 @@
     "world": {
       "type": "string",
       "minLength": 1,
-      "maxLength": 2000
+      "maxLength": 2000,
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
     },
     "world_word_count": {
       "type": "integer",
@@ -85,7 +84,8 @@
     "pressure": {
       "type": "string",
       "minLength": 1,
-      "maxLength": 500
+      "maxLength": 500,
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
     },
     "sources": {
       "type": "array",
@@ -98,46 +98,59 @@
     "ledger_delta": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "active",
-        "transformed",
-        "resolved",
-        "dormant"
-      ],
+      "required": ["active", "transformed", "resolved", "dormant"],
       "properties": {
-        "active": {
-          "type": "array",
-          "maxItems": 12,
-          "items": {
-            "type": "string"
-          }
-        },
-        "transformed": {
-          "type": "array",
-          "maxItems": 12,
-          "items": {
-            "type": "string"
-          }
-        },
-        "resolved": {
-          "type": "array",
-          "maxItems": 12,
-          "items": {
-            "type": "string"
-          }
-        },
-        "dormant": {
-          "type": "array",
-          "maxItems": 12,
-          "items": {
-            "type": "string"
-          }
-        }
+        "active": { "$ref": "#/$defs/ledgerIds" },
+        "transformed": { "$ref": "#/$defs/ledgerIds" },
+        "resolved": { "$ref": "#/$defs/ledgerIds" },
+        "dormant": { "$ref": "#/$defs/ledgerIds" }
       }
+    },
+    "content_license": {
+      "const": "CC-BY-SA-4.0"
     },
     "created_at": {
       "type": "string",
       "format": "date-time"
     }
-  }
+  },
+  "$defs": {
+    "ledgerIds": {
+      "type": "array",
+      "maxItems": 12,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "round": { "const": 0 } }, "required": ["round"] },
+      "then": {
+        "properties": {
+          "settlement_kind": { "const": "GENESIS" },
+          "parent": { "type": "null" },
+          "sources": { "maxItems": 0 }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "settlement_kind": { "const": "MOVES" } }, "required": ["settlement_kind"] },
+      "then": { "properties": { "sources": { "minItems": 1 } } }
+    },
+    {
+      "if": { "properties": { "settlement_kind": { "const": "PRESSURE" } }, "required": ["settlement_kind"] },
+      "then": { "properties": { "sources": { "maxItems": 0 } } }
+    },
+    {
+      "if": { "properties": { "settlement_kind": { "const": "GENESIS" } }, "required": ["settlement_kind"] },
+      "then": { "properties": { "round": { "const": 0 }, "parent": { "type": "null" } } }
+    },
+    {
+      "if": { "properties": { "round": { "minimum": 1 } }, "required": ["round"] },
+      "then": { "properties": { "parent": { "type": "object" } } }
+    }
+  ]
 }
