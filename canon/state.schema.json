@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/swigpy/fork120/blob/main/canon/state.schema.json",
+  "title": "FORK/120 candidate state",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "state_id",
+    "rules_path",
+    "bible_path",
+    "chapter_id",
+    "round",
+    "parent",
+    "world",
+    "world_word_count",
+    "pressure",
+    "sources",
+    "ledger_delta",
+    "created_at"
+  ],
+  "properties": {
+    "version": {
+      "const": 1
+    },
+    "state_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*-r[0-9]{3}$"
+    },
+    "rules_path": {
+      "type": "string",
+      "pattern": "^rules/[a-zA-Z0-9._/-]+\\.md$"
+    },
+    "bible_path": {
+      "type": "string",
+      "pattern": "^world/[a-zA-Z0-9._/-]+\\.md$"
+    },
+    "chapter_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "round": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "parent": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "state_id",
+            "git_commit",
+            "activation_comment"
+          ],
+          "properties": {
+            "state_id": {
+              "type": "string"
+            },
+            "git_commit": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "activation_comment": {
+              "type": "string",
+              "pattern": "^c[1-9][0-9]*$"
+            }
+          }
+        }
+      ]
+    },
+    "world": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000
+    },
+    "world_word_count": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 120
+    },
+    "pressure": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "sources": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^c[1-9][0-9]*$"
+      }
+    },
+    "ledger_delta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "active",
+        "transformed",
+        "resolved",
+        "dormant"
+      ],
+      "properties": {
+        "active": {
+          "type": "array",
+          "maxItems": 12,
+          "items": {
+            "type": "string"
+          }
+        },
+        "transformed": {
+          "type": "array",
+          "maxItems": 12,
+          "items": {
+            "type": "string"
+          }
+        },
+        "resolved": {
+          "type": "array",
+          "maxItems": 12,
+          "items": {
+            "type": "string"
+          }
+        },
+        "dormant": {
+          "type": "array",
+          "maxItems": 12,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}
