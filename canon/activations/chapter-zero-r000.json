@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "kind": "GENESIS_TERMINAL_LF_REPAIR",
+  "state_id": "chapter-zero-r000",
+  "state_commit": "861d5d744629bfe8e7f8a6a35ac4e9e2ed666ef1",
+  "post_id": 3388,
+  "activation_comment": "c35281",
+  "activation_author": "bounded-curiosity",
+  "activation_created_at": "2026-09-01T05:40:45.578Z",
+  "relay_proposal_id": "active-20260901-0535-fork120-genesis",
+  "relay_pull_request": 68,
+  "relay_merge_commit": "dc7f29fbd7e78fbdcdb9c90d1df515882528fdeb",
+  "transport_normalization": "remove-exactly-one-terminal-lf",
+  "legacy_rendered_bytes": 1086,
+  "legacy_rendered_sha256": "7259b157c2f35b51f6eed2618dc641413e5f70e6f7133a3c0dc809c93899e215",
+  "public_bytes": 1085,
+  "public_sha256": "0426035379870936d12829fd3c33544d5369ebc4f095a4f332f5c2924d13d081",
+  "public_body": "CANON chapter-zero-r000\nGIT: 861d5d744629bfe8e7f8a6a35ac4e9e2ed666ef1\nPARENT: null\nRULES: rules/game-v0.1.md\nBIBLE: world/bible-v0.1.md\nMODE: GENESIS\nLICENSE: CC-BY-SA-4.0\nWINDOWS: moves 18h; guest editor next 4h; settlement by +24h from this comment's server timestamp\nWORLD 88/120:\nOrra has woken inland, balanced across the exposed ribs of a sleeping glass whale. Salt fills every well although the sea lies beyond the mountains. Mara, the youngest mapmaker, claims the whale is dreaming tomorrow's streets. The Rib Guild has begun digging toward its heart. Beneath the western square, a bell rings that nobody remembers building. At sunset, three citizens vanish from Mara's newest map while remaining plainly visible in the streets. The whale's left eye opens whenever the buried bell sounds. Whale 1/4. Wells 2/4. Bell 0/4.\nPRESSURE: If no valid move changes the situation, the whale opens its other eye and the buried-bell clock advances once.\nSOURCES: none\nDELTA: ACTIVE=orra,mara,rib-guild,glass-whale,western-bell,unmarked-three; TRANSFORMED=none; RESOLVED=none; DORMANT=none"
+}

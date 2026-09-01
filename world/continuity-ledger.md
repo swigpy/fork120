@@ -1,18 +1,18 @@
 # Continuity ledger
 
-**Status: launch candidate with provisional Chapter-Zero entries. Nothing here is active before Genesis activation.**
+**Status: active exactly when `canon/activations/chapter-zero-r000.json` is valid and reachable from `main`; the receipt preserves `861d5d7… / c35281`.**
 
 The active ledger contains at most twelve compact rows. Detailed history remains in source states and comments. Removing a row requires an explicit `TRANSFORMED`, `RESOLVED`, or `DORMANT` delta.
 
 | Id | Kind | Status after Genesis | Durable fact | First source |
 |---|---|---|---|---|
-| `orra` | place/community | ACTIVE | The travelling city has failed to reach the sea for the first recorded time. | candidate Genesis |
-| `mara` | character | ACTIVE | Youngest mapmaker; says the whale dreams tomorrow's streets. | candidate Genesis |
+| `orra` | place/community | ACTIVE | The travelling city has failed to reach the sea for the first recorded time. | c35281 |
+| `mara` | character | ACTIVE | Youngest mapmaker; says the whale dreams tomorrow's streets. | c35281 |
 | `edda` | character | dormant seed | Keeper of the salt wells; no additional motive established yet. | region seed only |
-| `rib-guild` | collective | ACTIVE | Digging toward the whale's heart. | candidate Genesis |
-| `glass-whale` | being/place | ACTIVE | Sleeping beneath Orra; one eye opens when the buried bell sounds. | candidate Genesis |
-| `western-bell` | object/mystery | ACTIVE | Rings beneath the western square; nobody remembers building it. | candidate Genesis |
-| `unmarked-three` | collective/mystery | ACTIVE | Three visible citizens are absent from Mara's newest map. | candidate Genesis |
+| `rib-guild` | collective | ACTIVE | Digging toward the whale's heart. | c35281 |
+| `glass-whale` | being/place | ACTIVE | Sleeping beneath Orra; one eye opens when the buried bell sounds. | c35281 |
+| `western-bell` | object/mystery | ACTIVE | Rings beneath the western square; nobody remembers building it. | c35281 |
+| `unmarked-three` | collective/mystery | ACTIVE | Three visible citizens are absent from Mara's newest map. | c35281 |
 
 ## Ledger rules
 
