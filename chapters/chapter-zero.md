@@ -1,6 +1,6 @@
 # Chapter Zero: The Inland Ribs
 
-**Status: launch candidate. This document does not activate Genesis or invite moves.**
+**Status: active. Genesis remains on its immutable v0.1 comment pair; rounds 1–6 use a fresh v0.2 post per round after exact readback.**
 
 ## Purpose
 
@@ -9,7 +9,8 @@ Chapter Zero tests the smallest complete FORK/120 loop before live branches, sco
 ## Length and cadence
 
 - seven rounds;
-- one round per 24 hours, anchored to the active CANON comment's server timestamp;
+- one round per 24 hours, anchored to the active publication's server timestamp;
+- Genesis uses its existing CANON comment; every later round uses one new post containing the complete CANON;
 - 18-hour move window;
 - optional four-hour guest-editor window;
 - bounded-curiosity settlement no later than two hours afterward;
@@ -19,12 +20,13 @@ Chapter Zero tests the smallest complete FORK/120 loop before live branches, sco
 
 - Story Bible: `world/bible-v0.1.md`
 - Region: `world/regions/glass-whale-inland.md`
-- Rules: `rules/game-v0.1.md`
+- Genesis rules: `rules/game-v0.1.md`
+- Post-Genesis rules: `rules/game-v0.2.md`
 - Canonicalization: `rules/canonicalization-v0.1.md`
 - Candidate Genesis: `canon/states/chapter-zero-r000.json`
 - Public introduction: `docs/launch/chapter-zero-introduction.md`
 
-Genesis remains a candidate until its exact main-reachable merge commit is named by a valid 1F `CANON` comment and that comment is read back byte for byte.
+Genesis was activated by its exact main-reachable merge commit and public CANON comment. It is not rewritten by v0.2.
 
 ## Pilot limits
 
@@ -51,7 +53,8 @@ Use exactly one action as causal spine, up to two compatible carries, and one ho
 
 ## Evidence to record
 
-- unique contributors and contributors returning in two or more rounds;
+- unique valid contributors and contributors returning in two or more rounds;
+- the public handle and comment id of every valid contributor, separately from the incorporated subset;
 - actual `WORLD` word count for every settlement;
 - settlements using material from two or more citizens;
 - guest-editor proposals and bounded-curiosity fallbacks;

@@ -22,7 +22,7 @@
     "created_at"
   ],
   "properties": {
-    "version": { "const": 1 },
+    "version": { "enum": [1, 2] },
     "state_id": {
       "type": "string",
       "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*-r[0-9]{3}$"
@@ -67,8 +67,52 @@
               "pattern": "^c[1-9][0-9]*$"
             }
           }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["state_id", "git_commit", "activation"],
+          "properties": {
+            "state_id": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*-r[0-9]{3}$"
+            },
+            "git_commit": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "activation": {
+              "type": "string",
+              "pattern": "^(?:comment:c[1-9][0-9]*|post:[1-9][0-9]*)$"
+            }
+          }
         }
       ]
+    },
+    "round_title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+    },
+    "contributors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["handle", "move_id", "incorporated"],
+        "properties": {
+          "handle": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "move_id": {
+            "type": "string",
+            "pattern": "^c[1-9][0-9]*$"
+          },
+          "incorporated": { "type": "boolean" }
+        }
+      }
     },
     "world": {
       "type": "string",
@@ -127,9 +171,17 @@
   },
   "allOf": [
     {
+      "if": { "properties": { "version": { "const": 2 } }, "required": ["version"] },
+      "then": {
+        "required": ["round_title", "contributors"],
+        "properties": { "round": { "minimum": 1 } }
+      }
+    },
+    {
       "if": { "properties": { "round": { "const": 0 } }, "required": ["round"] },
       "then": {
         "properties": {
+          "version": { "const": 1 },
           "settlement_kind": { "const": "GENESIS" },
           "parent": { "type": "null" },
           "sources": { "maxItems": 0 }

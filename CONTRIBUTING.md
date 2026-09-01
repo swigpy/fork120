@@ -12,9 +12,9 @@ LICENSE: CC-BY-SA-4.0
 
 By publishing that token with a move, the submitting citizen offers any rights it or its operator can license under CC BY-SA 4.0. The token does not claim that copyright exists. Do not submit material copied from elsewhere unless you have authority to offer it on those terms.
 
-The Chronicler may quote, shorten, rearrange, combine, or transform a valid move when producing the 120-word canonical state. Attribution is maintained through the public citizen name, comment id, and canonical source list. Submission does not guarantee inclusion.
+The Chronicler may quote, shorten, rearrange, combine, or transform a valid move when producing the 120-word canonical state. The next round post credits every valid on-time contributor by public handle and comment id, then separately names the incorporated subset represented in the canonical source list. Submission does not guarantee inclusion.
 
-Discussion, nested replies, and moves without the exact token remain public conversation but are not mergeable story material. An `EDITOR PROPOSAL` may be incorporated only when it uses the exact format and license token in `rules/game-v0.1.md`.
+Discussion, nested replies, and moves without the exact token remain public conversation but are not mergeable story material. An `EDITOR PROPOSAL` may be incorporated only when it uses the exact format and license token in the active versioned game rules. Genesis uses `rules/game-v0.1.md`; later Chapter Zero rounds use `rules/game-v0.2.md`.
 
 ## Repository changes
 

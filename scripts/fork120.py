@@ -14,7 +14,7 @@ from pathlib import Path, PurePosixPath
 from typing import Any
 
 
-TOP_LEVEL_KEYS = {
+V1_TOP_LEVEL_KEYS = {
     "version",
     "state_id",
     "rules_path",
@@ -31,13 +31,18 @@ TOP_LEVEL_KEYS = {
     "content_license",
     "created_at",
 }
-PARENT_KEYS = {"state_id", "git_commit", "activation_comment"}
+V2_TOP_LEVEL_KEYS = V1_TOP_LEVEL_KEYS | {"round_title", "contributors"}
+PARENT_V1_KEYS = {"state_id", "git_commit", "activation_comment"}
+PARENT_V2_KEYS = {"state_id", "git_commit", "activation"}
+CONTRIBUTOR_KEYS = {"handle", "move_id", "incorporated"}
 LEDGER_KEYS = {"active", "transformed", "resolved", "dormant"}
 STATE_ID_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*-r[0-9]{3}$")
 CHAPTER_ID_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 LEDGER_ID_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 COMMIT_RE = re.compile(r"^[0-9a-f]{40}$")
 COMMENT_RE = re.compile(r"^c[1-9][0-9]*$")
+ACTIVATION_RE = re.compile(r"^(?:comment:c[1-9][0-9]*|post:[1-9][0-9]*)$")
+HANDLE_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 PROPOSAL_RE = re.compile(r"^active-[0-9]{8}-[0-9]{4}-[a-z0-9]+(?:-[a-z0-9]+)*$")
 ACTIVATION_KEYS = {
@@ -79,7 +84,7 @@ def _require(condition: bool, message: str) -> None:
 
 
 def word_count(text: str) -> int:
-    """Count non-empty whitespace-delimited runs, as defined by game v0.1."""
+    """Count non-empty whitespace-delimited runs, as defined by the game rules."""
 
     return len(re.findall(r"\S+", text))
 
@@ -104,12 +109,14 @@ def _validate_timestamp(value: Any) -> None:
 
 
 def validate_state(state: Any, repo_root: Path, state_path: Path | None = None) -> None:
-    """Validate one closed v1 state and all invariants not expressible in JSON Schema."""
+    """Validate one closed state and invariants not expressible in JSON Schema."""
 
     _require(isinstance(state, dict), "state must be an object")
+    version = state.get("version")
+    _require(type(version) is int and version in {1, 2}, "version must equal integer 1 or 2")
+    expected_keys = V1_TOP_LEVEL_KEYS if version == 1 else V2_TOP_LEVEL_KEYS
     keys = set(state)
-    _require(keys == TOP_LEVEL_KEYS, f"closed state keys differ: {sorted(keys ^ TOP_LEVEL_KEYS)}")
-    _require(type(state["version"]) is int and state["version"] == 1, "version must equal integer 1")
+    _require(keys == expected_keys, f"closed state keys differ: {sorted(keys ^ expected_keys)}")
 
     state_id = state["state_id"]
     _require(isinstance(state_id, str) and STATE_ID_RE.fullmatch(state_id) is not None, "invalid state_id")
@@ -128,14 +135,46 @@ def validate_state(state: Any, repo_root: Path, state_path: Path | None = None) 
 
     parent = state["parent"]
     if round_number == 0:
+        _require(version == 1, "round zero remains the immutable v1 Genesis state")
         _require(kind == "GENESIS", "round zero must be GENESIS")
         _require(parent is None, "GENESIS parent must be null")
     else:
         _require(kind != "GENESIS", "GENESIS is only valid at round zero")
-        _require(isinstance(parent, dict) and set(parent) == PARENT_KEYS, "non-genesis parent must be closed")
+        parent_keys = PARENT_V1_KEYS if version == 1 else PARENT_V2_KEYS
+        _require(isinstance(parent, dict) and set(parent) == parent_keys, "non-genesis parent must be closed")
         _require(isinstance(parent["state_id"], str) and STATE_ID_RE.fullmatch(parent["state_id"]) is not None, "invalid parent state_id")
         _require(isinstance(parent["git_commit"], str) and COMMIT_RE.fullmatch(parent["git_commit"]) is not None, "invalid parent git_commit")
-        _require(isinstance(parent["activation_comment"], str) and COMMENT_RE.fullmatch(parent["activation_comment"]) is not None, "invalid parent activation_comment")
+        if version == 1:
+            _require(isinstance(parent["activation_comment"], str) and COMMENT_RE.fullmatch(parent["activation_comment"]) is not None, "invalid parent activation_comment")
+        else:
+            _require(isinstance(parent["activation"], str) and ACTIVATION_RE.fullmatch(parent["activation"]) is not None, "invalid parent activation")
+
+    if version == 2:
+        round_title = state["round_title"]
+        _require(isinstance(round_title, str) and round_title == round_title.strip(), "round_title must be trimmed")
+        _require(1 <= len(round_title) <= 200, "round_title must contain 1 to 200 characters")
+        expected_prefix = f"FORK/120: Chapter Zero — R{round_number:03d} — "
+        _require(round_title.startswith(expected_prefix) and len(round_title) > len(expected_prefix), "round_title must identify Chapter Zero and the exact round")
+
+        contributors = state["contributors"]
+        _require(isinstance(contributors, list), "contributors must be an array")
+        move_ids: list[str] = []
+        handles: list[str] = []
+        incorporated: list[str] = []
+        for contributor in contributors:
+            _require(isinstance(contributor, dict) and set(contributor) == CONTRIBUTOR_KEYS, "contributor must be closed")
+            handle = contributor["handle"]
+            move_id = contributor["move_id"]
+            _require(isinstance(handle, str) and HANDLE_RE.fullmatch(handle) is not None, "invalid contributor handle")
+            _require(isinstance(move_id, str) and COMMENT_RE.fullmatch(move_id) is not None, "invalid contributor move_id")
+            _require(type(contributor["incorporated"]) is bool, "contributor incorporated must be boolean")
+            handles.append(handle)
+            move_ids.append(move_id)
+            if contributor["incorporated"]:
+                incorporated.append(move_id)
+        _require(len(handles) == len(set(handles)), "contributor handles must be unique")
+        _require(len(move_ids) == len(set(move_ids)), "contributor move ids must be unique")
+        _require(move_ids == sorted(move_ids, key=lambda value: int(value[1:])), "contributors must be ordered by move id")
 
     world = state["world"]
     _require(isinstance(world, str) and world != "", "world must be a non-empty string")
@@ -157,6 +196,8 @@ def validate_state(state: Any, repo_root: Path, state_path: Path | None = None) 
         _require(len(sources) >= 1, "MOVES settlement requires a source")
     else:
         _require(sources == [], f"{kind} settlement may not contain move sources")
+    if version == 2:
+        _require(set(sources) == set(incorporated), "sources must equal incorporated contributor move ids")
 
     ledger = state["ledger_delta"]
     _require(isinstance(ledger, dict) and set(ledger) == LEDGER_KEYS, "ledger_delta must be closed")
@@ -301,8 +342,8 @@ def validate_schema(repo_root: Path) -> None:
     except (OSError, json.JSONDecodeError) as exc:
         raise ValidationError(f"cannot parse schema: {exc}") from exc
     _require(schema.get("additionalProperties") is False, "schema root must be closed")
-    _require(set(schema.get("required", [])) == TOP_LEVEL_KEYS, "schema required keys differ from validator")
-    _require(set(schema.get("properties", {})) == TOP_LEVEL_KEYS, "schema properties differ from validator")
+    _require(set(schema.get("properties", {})) == V2_TOP_LEVEL_KEYS, "schema properties differ from validator")
+    _require(set(schema.get("required", [])) == V1_TOP_LEVEL_KEYS, "schema common required keys differ from validator")
 
 
 def discover_states(repo_root: Path) -> list[Path]:
@@ -338,14 +379,28 @@ def render_canon(state: dict[str, Any], git_commit: str) -> str:
     parent = state["parent"]
     if parent is None:
         parent_text = "null"
-    else:
+    elif state["version"] == 1:
         parent_text = f'{parent["git_commit"]} / {parent["activation_comment"]}'
+    else:
+        parent_text = f'{parent["git_commit"]} / {parent["activation"]}'
     sources = ", ".join(state["sources"]) if state["sources"] else "none"
     delta_parts = []
     for status in ("active", "transformed", "resolved", "dormant"):
         values = ",".join(state["ledger_delta"][status]) or "none"
         delta_parts.append(f"{status.upper()}={values}")
     delta = "; ".join(delta_parts)
+    window_origin = "comment" if state["version"] == 1 else "post"
+    attribution = ""
+    if state["version"] == 2:
+        contributors = ", ".join(
+            f'{item["handle"]} ({item["move_id"]})' for item in state["contributors"]
+        ) or "none"
+        incorporated = ", ".join(
+            f'{item["handle"]} ({item["move_id"]})'
+            for item in state["contributors"]
+            if item["incorporated"]
+        ) or "none"
+        attribution = f"CONTRIBUTORS: {contributors}\nINCORPORATED: {incorporated}\n"
     return (
         f'CANON {state["state_id"]}\n'
         f"GIT: {git_commit}\n"
@@ -354,10 +409,11 @@ def render_canon(state: dict[str, Any], git_commit: str) -> str:
         f'BIBLE: {state["bible_path"]}\n'
         f'MODE: {state["settlement_kind"]}\n'
         f'LICENSE: {state["content_license"]}\n'
-        "WINDOWS: moves 18h; guest editor next 4h; settlement by +24h from this comment's server timestamp\n"
+        f"WINDOWS: moves 18h; guest editor next 4h; settlement by +24h from this {window_origin}'s server timestamp\n"
         f'WORLD {state["world_word_count"]}/120:\n'
         f'{state["world"]}\n'
         f'PRESSURE: {state["pressure"]}\n'
+        f"{attribution}"
         f"SOURCES: {sources}\n"
         f"DELTA: {delta}"
     )
@@ -374,6 +430,10 @@ def _build_parser() -> argparse.ArgumentParser:
     render_parser.add_argument("--root", type=Path, default=Path.cwd())
     render_parser.add_argument("--state", type=Path, required=True)
     render_parser.add_argument("--git-commit", required=True)
+    round_parser = subparsers.add_parser("render-round-post", help="render exact v2 post title and body as JSON")
+    round_parser.add_argument("--root", type=Path, default=Path.cwd())
+    round_parser.add_argument("--state", type=Path, required=True)
+    round_parser.add_argument("--git-commit", required=True)
     return parser
 
 
@@ -388,7 +448,11 @@ def main(argv: list[str] | None = None) -> int:
         else:
             state_path = args.state if args.state.is_absolute() else repo_root / args.state
             state = load_and_validate(state_path, repo_root)
-            sys.stdout.write(render_canon(state, args.git_commit))
+            if args.command == "render-round-post":
+                _require(state["version"] == 2 and state["round"] >= 1, "round posts require a non-Genesis v2 state")
+                sys.stdout.write(json.dumps({"title": state["round_title"], "body": render_canon(state, args.git_commit)}, ensure_ascii=False, separators=(",", ":")))
+            else:
+                sys.stdout.write(render_canon(state, args.git_commit))
     except ValidationError as exc:
         print(f"validation failed: {exc}", file=sys.stderr)
         return 1
