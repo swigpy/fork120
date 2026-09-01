@@ -25,6 +25,7 @@ class Fork120ValidationTests(unittest.TestCase):
         (self.root / "rules").mkdir()
         (self.root / "world").mkdir()
         (self.root / "rules" / "game-v0.1.md").write_text("rules\n", encoding="utf-8")
+        (self.root / "rules" / "game-v0.2.md").write_text("rules v2\n", encoding="utf-8")
         (self.root / "world" / "bible-v0.1.md").write_text("bible\n", encoding="utf-8")
         world = "Orra wakes inland. The western bell rings beneath a sleeping glass whale."
         self.state = {
@@ -56,6 +57,30 @@ class Fork120ValidationTests(unittest.TestCase):
     def assert_invalid(self, state: dict, fragment: str) -> None:
         with self.assertRaisesRegex(ValidationError, fragment):
             validate_state(state, self.root)
+
+    def v2_moves_state(self) -> dict:
+        state = copy.deepcopy(self.state)
+        state.update(
+            {
+                "version": 2,
+                "rules_path": "rules/game-v0.2.md",
+                "state_id": "chapter-zero-r001",
+                "round": 1,
+                "settlement_kind": "MOVES",
+                "parent": {
+                    "state_id": "chapter-zero-r000",
+                    "git_commit": "a" * 40,
+                    "activation": "comment:c35281",
+                },
+                "round_title": "FORK/120: Chapter Zero — R001 — The Fourth Name",
+                "contributors": [
+                    {"handle": "alpha-agent", "move_id": "c101", "incorporated": True},
+                    {"handle": "beta-agent", "move_id": "c102", "incorporated": False},
+                ],
+                "sources": ["c101"],
+            }
+        )
+        return state
 
     def test_valid_genesis(self) -> None:
         validate_state(self.state, self.root)
@@ -120,6 +145,33 @@ class Fork120ValidationTests(unittest.TestCase):
         self.assertIn(f'WORLD {self.state["world_word_count"]}/120:\n{self.state["world"]}\n', rendered)
         self.assertTrue(rendered.endswith("DORMANT=none"))
         self.assertFalse(rendered.endswith("\n"))
+
+    def test_v2_round_post_state_records_all_and_incorporated_contributors(self) -> None:
+        state = self.v2_moves_state()
+        validate_state(state, self.root)
+        rendered = render_canon(state, "b" * 40)
+        self.assertIn("PARENT: " + "a" * 40 + " / comment:c35281\n", rendered)
+        self.assertIn("from this post's server timestamp\n", rendered)
+        self.assertIn("CONTRIBUTORS: alpha-agent (c101), beta-agent (c102)\n", rendered)
+        self.assertIn("INCORPORATED: alpha-agent (c101)\n", rendered)
+
+    def test_v2_sources_must_equal_incorporated_moves(self) -> None:
+        state = self.v2_moves_state()
+        state["sources"] = ["c102"]
+        self.assert_invalid(state, "sources must equal incorporated")
+
+    def test_v2_contributors_are_ordered_and_unique_by_citizen(self) -> None:
+        state = self.v2_moves_state()
+        state["contributors"].reverse()
+        self.assert_invalid(state, "ordered by move id")
+        state = self.v2_moves_state()
+        state["contributors"][1]["handle"] = "alpha-agent"
+        self.assert_invalid(state, "handles must be unique")
+
+    def test_v2_parent_accepts_post_activation(self) -> None:
+        state = self.v2_moves_state()
+        state["parent"]["activation"] = "post:3456"
+        validate_state(state, self.root)
 
 
     def test_activation_receipt_accepts_only_the_recorded_terminal_lf_repair(self) -> None:
