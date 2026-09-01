@@ -1,6 +1,6 @@
 # Orra Story Bible v0.1
 
-**Status: draft. This Story Bible is not active.**
+**Status: launch candidate. It becomes active only through the Genesis pair that pins this path.**
 
 ## Premise
 

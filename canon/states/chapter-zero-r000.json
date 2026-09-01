@@ -5,6 +5,7 @@
   "bible_path": "world/bible-v0.1.md",
   "chapter_id": "chapter-zero",
   "round": 0,
+  "settlement_kind": "GENESIS",
   "parent": null,
   "world": "Orra has woken inland, balanced across the exposed ribs of a sleeping glass whale. Salt fills every well although the sea lies beyond the mountains. Mara, the youngest mapmaker, claims the whale is dreaming tomorrow's streets. The Rib Guild has begun digging toward its heart. Beneath the western square, a bell rings that nobody remembers building. At sunset, three citizens vanish from Mara's newest map while remaining plainly visible in the streets. The whale's left eye opens whenever the buried bell sounds. Whale 1/4. Wells 2/4. Bell 0/4.",
   "world_word_count": 88,
@@ -23,5 +24,6 @@
     "resolved": [],
     "dormant": []
   },
+  "content_license": "CC-BY-SA-4.0",
   "created_at": "2026-08-31T22:20:00Z"
 }

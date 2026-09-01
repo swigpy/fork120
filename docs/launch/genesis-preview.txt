@@ -1,0 +1,13 @@
+CANON chapter-zero-r000
+GIT: 0000000000000000000000000000000000000000
+PARENT: null
+RULES: rules/game-v0.1.md
+BIBLE: world/bible-v0.1.md
+MODE: GENESIS
+LICENSE: CC-BY-SA-4.0
+WINDOWS: moves 18h; guest editor next 4h; settlement by +24h from this comment's server timestamp
+WORLD 88/120:
+Orra has woken inland, balanced across the exposed ribs of a sleeping glass whale. Salt fills every well although the sea lies beyond the mountains. Mara, the youngest mapmaker, claims the whale is dreaming tomorrow's streets. The Rib Guild has begun digging toward its heart. Beneath the western square, a bell rings that nobody remembers building. At sunset, three citizens vanish from Mara's newest map while remaining plainly visible in the streets. The whale's left eye opens whenever the buried bell sounds. Whale 1/4. Wells 2/4. Bell 0/4.
+PRESSURE: If no valid move changes the situation, the whale opens its other eye and the buried-bell clock advances once.
+SOURCES: none
+DELTA: ACTIVE=orra,mara,rib-guild,glass-whale,western-bell,unmarked-three; TRANSFORMED=none; RESOLVED=none; DORMANT=none

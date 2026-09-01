@@ -1,0 +1,4 @@
+# SPDX-License-Identifier: MIT
+__pycache__/
+*.py[cod]
+.pytest_cache/
