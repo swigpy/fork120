@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import sys
@@ -37,6 +38,35 @@ CHAPTER_ID_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 LEDGER_ID_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 COMMIT_RE = re.compile(r"^[0-9a-f]{40}$")
 COMMENT_RE = re.compile(r"^c[1-9][0-9]*$")
+SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
+PROPOSAL_RE = re.compile(r"^active-[0-9]{8}-[0-9]{4}-[a-z0-9]+(?:-[a-z0-9]+)*$")
+ACTIVATION_KEYS = {
+    "version",
+    "kind",
+    "state_id",
+    "state_commit",
+    "post_id",
+    "activation_comment",
+    "activation_author",
+    "activation_created_at",
+    "relay_proposal_id",
+    "relay_pull_request",
+    "relay_merge_commit",
+    "transport_normalization",
+    "legacy_rendered_bytes",
+    "legacy_rendered_sha256",
+    "public_bytes",
+    "public_sha256",
+    "public_body",
+}
+GENESIS_REPAIR_KIND = "GENESIS_TERMINAL_LF_REPAIR"
+GENESIS_REPAIR_PAIR = (
+    "chapter-zero-r000",
+    "861d5d744629bfe8e7f8a6a35ac4e9e2ed666ef1",
+    3388,
+    "c35281",
+)
+TRANSPORT_NORMALIZATION = "remove-exactly-one-terminal-lf"
 
 
 class ValidationError(ValueError):
@@ -153,6 +183,117 @@ def load_and_validate(path: Path, repo_root: Path) -> dict[str, Any]:
     return state
 
 
+def _sha256_utf8(value: str) -> str:
+    return hashlib.sha256(value.encode("utf-8")).hexdigest()
+
+
+def validate_activation_receipt(
+    receipt: Any,
+    repo_root: Path,
+    receipt_path: Path | None = None,
+) -> None:
+    """Validate the single fail-closed Chapter Zero launch repair receipt."""
+
+    _require(isinstance(receipt, dict), "activation receipt must be an object")
+    keys = set(receipt)
+    _require(
+        keys == ACTIVATION_KEYS,
+        f"closed activation receipt keys differ: {sorted(keys ^ ACTIVATION_KEYS)}",
+    )
+    _require(type(receipt["version"]) is int and receipt["version"] == 1, "activation receipt version must equal integer 1")
+    _require(receipt["kind"] == GENESIS_REPAIR_KIND, "invalid activation receipt kind")
+
+    state_id = receipt["state_id"]
+    state_commit = receipt["state_commit"]
+    post_id = receipt["post_id"]
+    activation_comment = receipt["activation_comment"]
+    pair = (state_id, state_commit, post_id, activation_comment)
+    _require(pair == GENESIS_REPAIR_PAIR, "v1 activation repair is restricted to the recorded Genesis pair")
+    if receipt_path is not None:
+        _require(receipt_path.stem == state_id, "activation receipt filename must equal state_id")
+
+    _require(COMMIT_RE.fullmatch(receipt["relay_merge_commit"]) is not None, "invalid relay merge commit")
+    _require(receipt["activation_author"] == "bounded-curiosity", "invalid activation author")
+    _validate_timestamp(receipt["activation_created_at"])
+    _require(
+        isinstance(receipt["relay_proposal_id"], str)
+        and PROPOSAL_RE.fullmatch(receipt["relay_proposal_id"]) is not None,
+        "invalid relay proposal id",
+    )
+    _require(
+        type(receipt["relay_pull_request"]) is int and receipt["relay_pull_request"] > 0,
+        "relay pull request must be a positive integer",
+    )
+    _require(
+        receipt["transport_normalization"] == TRANSPORT_NORMALIZATION,
+        "invalid transport normalization",
+    )
+
+    state_path = repo_root / "canon" / "states" / f"{state_id}.json"
+    state = load_and_validate(state_path, repo_root)
+    public_body = receipt["public_body"]
+    _require(isinstance(public_body, str) and public_body != "", "public_body must be a non-empty string")
+    _require(not public_body.endswith(("\n", "\r")), "public_body may not end in a line terminator")
+
+    normalized_render = render_canon(state, state_commit)
+    _require(public_body == normalized_render, "public_body differs from normalized renderer output")
+    legacy_render = public_body + "\n"
+
+    public_bytes = public_body.encode("utf-8")
+    legacy_bytes = legacy_render.encode("utf-8")
+    _require(
+        type(receipt["public_bytes"]) is int and receipt["public_bytes"] == len(public_bytes),
+        "public byte count mismatch",
+    )
+    _require(
+        type(receipt["legacy_rendered_bytes"]) is int
+        and receipt["legacy_rendered_bytes"] == len(legacy_bytes),
+        "legacy rendered byte count mismatch",
+    )
+    _require(
+        receipt["legacy_rendered_bytes"] == receipt["public_bytes"] + 1,
+        "repair must remove exactly one byte",
+    )
+    _require(
+        isinstance(receipt["public_sha256"], str)
+        and SHA256_RE.fullmatch(receipt["public_sha256"]) is not None
+        and receipt["public_sha256"] == _sha256_utf8(public_body),
+        "public SHA-256 mismatch",
+    )
+    _require(
+        isinstance(receipt["legacy_rendered_sha256"], str)
+        and SHA256_RE.fullmatch(receipt["legacy_rendered_sha256"]) is not None
+        and receipt["legacy_rendered_sha256"] == _sha256_utf8(legacy_render),
+        "legacy rendered SHA-256 mismatch",
+    )
+
+
+def load_activation_receipt(path: Path, repo_root: Path) -> dict[str, Any]:
+    try:
+        receipt = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValidationError(f"cannot parse {path}: {exc}") from exc
+    validate_activation_receipt(receipt, repo_root, path)
+    return receipt
+
+
+def validate_activation_schema(repo_root: Path) -> None:
+    schema_path = repo_root / "canon" / "activation.schema.json"
+    try:
+        schema = json.loads(schema_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValidationError(f"cannot parse activation schema: {exc}") from exc
+    _require(schema.get("additionalProperties") is False, "activation schema root must be closed")
+    _require(
+        set(schema.get("required", [])) == ACTIVATION_KEYS,
+        "activation schema required keys differ from validator",
+    )
+    _require(
+        set(schema.get("properties", {})) == ACTIVATION_KEYS,
+        "activation schema properties differ from validator",
+    )
+
+
 def validate_schema(repo_root: Path) -> None:
     schema_path = repo_root / "canon" / "state.schema.json"
     try:
@@ -172,13 +313,24 @@ def discover_states(repo_root: Path) -> list[Path]:
     return paths
 
 
-def validate_repository(repo_root: Path) -> list[Path]:
+def discover_activation_receipts(repo_root: Path) -> list[Path]:
+    directory = repo_root / "canon" / "activations"
+    return sorted(directory.glob("*.json")) if directory.is_dir() else []
+
+
+def validate_repository(repo_root: Path) -> tuple[list[Path], list[Path]]:
     validate_schema(repo_root)
+    validate_activation_schema(repo_root)
     states = discover_states(repo_root)
     _require(states != [], "repository contains no candidate states")
     for path in states:
         load_and_validate(path, repo_root)
-    return states
+
+    receipts = discover_activation_receipts(repo_root)
+    _require(receipts != [], "repository contains no activation receipt")
+    for path in receipts:
+        load_activation_receipt(path, repo_root)
+    return states, receipts
 
 
 def render_canon(state: dict[str, Any], git_commit: str) -> str:
@@ -207,7 +359,7 @@ def render_canon(state: dict[str, Any], git_commit: str) -> str:
         f'{state["world"]}\n'
         f'PRESSURE: {state["pressure"]}\n'
         f"SOURCES: {sources}\n"
-        f"DELTA: {delta}\n"
+        f"DELTA: {delta}"
     )
 
 
@@ -231,8 +383,8 @@ def main(argv: list[str] | None = None) -> int:
     try:
         repo_root = args.root.resolve()
         if args.command == "validate":
-            states = validate_repository(repo_root)
-            print(f"validated {len(states)} state(s)")
+            states, receipts = validate_repository(repo_root)
+            print(f"validated {len(states)} state(s) and {len(receipts)} activation receipt(s)")
         else:
             state_path = args.state if args.state.is_absolute() else repo_root / args.state
             state = load_and_validate(state_path, repo_root)

@@ -3,12 +3,19 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.fork120 import ValidationError, render_canon, validate_state, word_count
+from scripts.fork120 import (
+    ValidationError,
+    render_canon,
+    validate_activation_receipt,
+    validate_state,
+    word_count,
+)
 
 
 class Fork120ValidationTests(unittest.TestCase):
@@ -111,7 +118,45 @@ class Fork120ValidationTests(unittest.TestCase):
         self.assertIn("MODE: GENESIS\n", rendered)
         self.assertIn("LICENSE: CC-BY-SA-4.0\n", rendered)
         self.assertIn(f'WORLD {self.state["world_word_count"]}/120:\n{self.state["world"]}\n', rendered)
-        self.assertTrue(rendered.endswith("DORMANT=none\n"))
+        self.assertTrue(rendered.endswith("DORMANT=none"))
+        self.assertFalse(rendered.endswith("\n"))
+
+
+    def test_activation_receipt_accepts_only_the_recorded_terminal_lf_repair(self) -> None:
+        state_dir = self.root / "canon" / "states"
+        state_dir.mkdir(parents=True)
+        (state_dir / "chapter-zero-r000.json").write_text(
+            json.dumps(self.state),
+            encoding="utf-8",
+        )
+        state_commit = "861d5d744629bfe8e7f8a6a35ac4e9e2ed666ef1"
+        public_body = render_canon(self.state, state_commit)
+        legacy_render = public_body + "\n"
+        receipt = {
+            "version": 1,
+            "kind": "GENESIS_TERMINAL_LF_REPAIR",
+            "state_id": "chapter-zero-r000",
+            "state_commit": state_commit,
+            "post_id": 3388,
+            "activation_comment": "c35281",
+            "activation_author": "bounded-curiosity",
+            "activation_created_at": "2026-09-01T05:40:45.578Z",
+            "relay_proposal_id": "active-20260901-0535-fork120-genesis",
+            "relay_pull_request": 68,
+            "relay_merge_commit": "dc7f29fbd7e78fbdcdb9c90d1df515882528fdeb",
+            "transport_normalization": "remove-exactly-one-terminal-lf",
+            "legacy_rendered_bytes": len(legacy_render.encode("utf-8")),
+            "legacy_rendered_sha256": hashlib.sha256(legacy_render.encode("utf-8")).hexdigest(),
+            "public_bytes": len(public_body.encode("utf-8")),
+            "public_sha256": hashlib.sha256(public_body.encode("utf-8")).hexdigest(),
+            "public_body": public_body,
+        }
+        validate_activation_receipt(receipt, self.root)
+
+        changed = copy.deepcopy(receipt)
+        changed["public_body"] += " "
+        with self.assertRaisesRegex(ValidationError, "normalized renderer output"):
+            validate_activation_receipt(changed, self.root)
 
     def test_json_round_trip_does_not_change_world(self) -> None:
         encoded = json.dumps(self.state)
