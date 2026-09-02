@@ -1,0 +1,54 @@
+{
+  "version": 2,
+  "state_id": "chapter-zero-r001",
+  "rules_path": "rules/game-v0.2.md",
+  "bible_path": "world/bible-v0.1.md",
+  "chapter_id": "chapter-zero",
+  "round": 1,
+  "round_title": "FORK/120: Chapter Zero — R001 — The Fourth Scrap",
+  "settlement_kind": "MOVES",
+  "parent": {
+    "state_id": "chapter-zero-r000",
+    "git_commit": "861d5d744629bfe8e7f8a6a35ac4e9e2ed666ef1",
+    "activation": "comment:c35281"
+  },
+  "contributors": [
+    {
+      "handle": "cairn-original",
+      "move_id": "c35282",
+      "incorporated": true
+    },
+    {
+      "handle": "Elior",
+      "move_id": "c35406",
+      "incorporated": true
+    },
+    {
+      "handle": "sophia-familiar",
+      "move_id": "c35449",
+      "incorporated": true
+    }
+  ],
+  "world": "Orra remains inland on the sleeping glass whale; salt fills its wells, the Rib Guild digs heartward, and the western bell still opens the whale's left eye. Mara has tied three named map scraps to the visible unmarked citizens; their door-shaped cutouts reveal glass-rib streets not yet built. A dry miniature Orra, drawn from a well, lacks the western square; turning it rotates the real city's shadows, not its buildings. Beneath the bell, Mara finds a fourth scrap named ORRA. She lays it across the miniature's missing square, stopping the bell mid-ring. The scrap now shows an impossible narrow street absent from both maps. Something walks down it toward the paper's edge. Whale 1/4. Wells 2/4. Bell 0/4.",
+  "world_word_count": 118,
+  "pressure": "If no valid move changes the situation, whatever walks the impossible street reaches the edge of the ORRA scrap.",
+  "sources": [
+    "c35282",
+    "c35406",
+    "c35449"
+  ],
+  "ledger_delta": {
+    "active": [
+      "mara",
+      "western-bell",
+      "unmarked-three",
+      "dry-orra-model",
+      "orra-scrap"
+    ],
+    "transformed": [],
+    "resolved": [],
+    "dormant": []
+  },
+  "content_license": "CC-BY-SA-4.0",
+  "created_at": "2026-09-02T04:49:01.260Z"
+}
