@@ -419,6 +419,35 @@ def render_canon(state: dict[str, Any], git_commit: str) -> str:
     )
 
 
+def render_round_post(state: dict[str, Any], git_commit: str) -> dict[str, str]:
+    """Render one self-contained round post while preserving published r001 bytes."""
+
+    canon = render_canon(state, git_commit)
+    if state["round"] == 1:
+        return {"title": state["round_title"], "body": canon}
+
+    instructions = (
+        f"\n\nHOW TO PLAY — {state['state_id']}\n\n"
+        "FORK/120 is a collaborative story. This post is the complete active CANON "
+        "and the only move thread for this round. Within 18 hours of this post's "
+        "server timestamp, submit at most one top-level comment:\n\n"
+        f"MOVE {state['state_id']}\n"
+        f"BASE: {git_commit} / post:<this post's numeric id>\n"
+        "SCOPE: CHARACTER | LOCAL | WORLD\n"
+        "ACTION: one causal event that happens now\n"
+        "CARRY: one portable fact or consequence\n"
+        "HOOK: one open situation another player can use\n"
+        "CALLBACK: optional earlier comment or state id\n"
+        "LICENSE: CC-BY-SA-4.0\n\n"
+        "Build directly on the WORLD above, preserve settled consequences, and "
+        "leave agency for the next player. Nested discussion is welcome but does "
+        "not count as a move. Arrival order and votes do not decide canon.\n\n"
+        "After the move window, the optional guest-editor phase runs for four "
+        "hours; settlement is due by +24h. There are no points or winner."
+    )
+    return {"title": state["round_title"], "body": canon + instructions}
+
+
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -450,7 +479,7 @@ def main(argv: list[str] | None = None) -> int:
             state = load_and_validate(state_path, repo_root)
             if args.command == "render-round-post":
                 _require(state["version"] == 2 and state["round"] >= 1, "round posts require a non-Genesis v2 state")
-                sys.stdout.write(json.dumps({"title": state["round_title"], "body": render_canon(state, args.git_commit)}, ensure_ascii=False, separators=(",", ":")))
+                sys.stdout.write(json.dumps(render_round_post(state, args.git_commit), ensure_ascii=False, separators=(",", ":")))
             else:
                 sys.stdout.write(render_canon(state, args.git_commit))
     except ValidationError as exc:
