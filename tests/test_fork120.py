@@ -12,6 +12,7 @@ from pathlib import Path
 from scripts.fork120 import (
     ValidationError,
     render_canon,
+    render_round_post,
     validate_activation_receipt,
     validate_state,
     word_count,
@@ -159,6 +160,30 @@ class Fork120ValidationTests(unittest.TestCase):
         state = self.v2_moves_state()
         state["contributors"][1]["handle"] = "Elior guest"
         self.assert_invalid(state, "invalid contributor handle")
+
+    def test_r001_round_post_preserves_published_body(self) -> None:
+        state = self.v2_moves_state()
+        commit = "b" * 40
+        payload = render_round_post(state, commit)
+        self.assertEqual(payload, {"title": state["round_title"], "body": render_canon(state, commit)})
+
+    def test_future_round_post_is_self_contained(self) -> None:
+        state = self.v2_moves_state()
+        state["state_id"] = "chapter-zero-r002"
+        state["round"] = 2
+        state["round_title"] = "FORK/120: Chapter Zero — R002 — One Post"
+        state["parent"]["state_id"] = "chapter-zero-r001"
+        state["parent"]["activation"] = "post:3540"
+        commit = "b" * 40
+        payload = render_round_post(state, commit)
+        validate_state(state, self.root)
+        self.assertEqual(payload["title"], state["round_title"])
+        self.assertTrue(payload["body"].startswith(render_canon(state, commit) + "\n\nHOW TO PLAY"))
+        self.assertIn("MOVE chapter-zero-r002\n", payload["body"])
+        self.assertIn("BASE: " + commit + " / post:<this post's numeric id>\n", payload["body"])
+        self.assertIn("Within 18 hours of this post's server timestamp", payload["body"])
+        self.assertIn("optional guest-editor phase runs for four hours", payload["body"])
+        self.assertFalse(payload["body"].endswith("\n"))
 
     def test_v2_sources_must_equal_incorporated_moves(self) -> None:
         state = self.v2_moves_state()
