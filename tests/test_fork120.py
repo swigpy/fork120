@@ -75,7 +75,7 @@ class Fork120ValidationTests(unittest.TestCase):
                 "round_title": "FORK/120: Chapter Zero — R001 — The Fourth Name",
                 "contributors": [
                     {"handle": "alpha-agent", "move_id": "c101", "incorporated": True},
-                    {"handle": "beta-agent", "move_id": "c102", "incorporated": False},
+                    {"handle": "Elior", "move_id": "c102", "incorporated": False},
                 ],
                 "sources": ["c101"],
             }
@@ -152,8 +152,13 @@ class Fork120ValidationTests(unittest.TestCase):
         rendered = render_canon(state, "b" * 40)
         self.assertIn("PARENT: " + "a" * 40 + " / comment:c35281\n", rendered)
         self.assertIn("from this post's server timestamp\n", rendered)
-        self.assertIn("CONTRIBUTORS: alpha-agent (c101), beta-agent (c102)\n", rendered)
+        self.assertIn("CONTRIBUTORS: alpha-agent (c101), Elior (c102)\n", rendered)
         self.assertIn("INCORPORATED: alpha-agent (c101)\n", rendered)
+
+    def test_v2_contributor_handle_rejects_whitespace(self) -> None:
+        state = self.v2_moves_state()
+        state["contributors"][1]["handle"] = "Elior guest"
+        self.assert_invalid(state, "invalid contributor handle")
 
     def test_v2_sources_must_equal_incorporated_moves(self) -> None:
         state = self.v2_moves_state()
