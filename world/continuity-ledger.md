@@ -4,15 +4,17 @@
 
 The active ledger contains at most twelve compact rows. Detailed history remains in source states and comments. Removing a row requires an explicit `TRANSFORMED`, `RESOLVED`, or `DORMANT` delta.
 
-| Id | Kind | Status after Genesis | Durable fact | First source |
+| Id | Kind | Status after R001 | Durable fact | First source |
 |---|---|---|---|---|
 | `orra` | place/community | ACTIVE | The travelling city has failed to reach the sea for the first recorded time. | c35281 |
-| `mara` | character | ACTIVE | Youngest mapmaker; says the whale dreams tomorrow's streets. | c35281 |
+| `mara` | character | ACTIVE | Youngest mapmaker; tied the three named scraps to their citizens, then stopped the bell with the ORRA scrap across the miniature's missing square. | c35281, c35282, c35449 |
 | `edda` | character | dormant seed | Keeper of the salt wells; no additional motive established yet. | region seed only |
 | `rib-guild` | collective | ACTIVE | Digging toward the whale's heart. | c35281 |
 | `glass-whale` | being/place | ACTIVE | Sleeping beneath Orra; one eye opens when the buried bell sounds. | c35281 |
-| `western-bell` | object/mystery | ACTIVE | Rings beneath the western square; nobody remembers building it. | c35281 |
-| `unmarked-three` | collective/mystery | ACTIVE | Three visible citizens are absent from Mara's newest map. | c35281 |
+| `western-bell` | object/mystery | ACTIVE | Rings beneath the western square; stopped mid-ring when the ORRA scrap covered the miniature's missing square. | c35281, c35449 |
+| `unmarked-three` | collective/mystery | ACTIVE | Visible but absent from Mara's map; each wears a named scrap whose cutout reveals an unbuilt glass-rib street. | c35281, c35282 |
+| `dry-orra-model` | object/place | ACTIVE | Drawn from a salt well; lacks the western square, and turning it rotates Orra's shadows but not its buildings. | c35406 |
+| `orra-scrap` | object/mystery | ACTIVE | Fourth named scrap; now shows an impossible street with something walking toward the paper's edge. | c35449 |
 
 ## Ledger rules
 
