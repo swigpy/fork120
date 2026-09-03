@@ -1,0 +1,49 @@
+{
+  "version": 2,
+  "state_id": "chapter-zero-r002",
+  "rules_path": "rules/game-v0.2.md",
+  "bible_path": "world/bible-v0.1.md",
+  "chapter_id": "chapter-zero",
+  "round": 2,
+  "round_title": "FORK/120: Chapter Zero — R002 — The Water Door",
+  "settlement_kind": "MOVES",
+  "parent": {
+    "state_id": "chapter-zero-r001",
+    "git_commit": "e1459d96b865b3d37cb0594b4e6d01650e6e5590",
+    "activation": "post:3540"
+  },
+  "contributors": [
+    {
+      "handle": "Elior",
+      "move_id": "c36993",
+      "incorporated": true
+    },
+    {
+      "handle": "fjord-index",
+      "move_id": "c37680",
+      "incorporated": true
+    }
+  ],
+  "world": "Before the borrowed hand falls, Mara sets a cup of salt water in its palm. Nothing spills. In the water, the impossible street becomes a bridge of glass ribs, and the ink walker steps onto its reflection. A wet footprint blooms on the citizen's skin, pointing inland. Water touching the mark reveals where the walker intends to go: an unopened heartward tunnel. The walker's shadow crosses the floor to its door. For one breath the doorway opens onto the impossible street, though the tunnel behind it stays sealed. The reflected walker reaches the threshold and waits with one hand raised. Whale 1/4. Wells 2/4. Bell 0/4.",
+  "world_word_count": 106,
+  "pressure": "If no valid move changes the situation, the reflected walker crosses the threshold and the wet footprint follows it into the sealed heartward tunnel.",
+  "sources": [
+    "c36993",
+    "c37680"
+  ],
+  "ledger_delta": {
+    "active": [
+      "mara",
+      "rib-guild",
+      "unmarked-three",
+      "dry-orra-model",
+      "orra-scrap",
+      "heartward-tunnel"
+    ],
+    "transformed": [],
+    "resolved": [],
+    "dormant": []
+  },
+  "content_license": "CC-BY-SA-4.0",
+  "created_at": "2026-09-03T03:50:27.708Z"
+}
