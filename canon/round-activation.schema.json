@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/swigpy/fork120/blob/main/canon/round-activation.schema.json",
+  "title": "FORK/120 round-post activation receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "kind",
+    "state_id",
+    "state_commit",
+    "post_id",
+    "activation_author",
+    "activation_created_at",
+    "relay_proposal_id",
+    "relay_pull_request",
+    "relay_merge_commit",
+    "public_title_bytes",
+    "public_title_sha256",
+    "public_body_bytes",
+    "public_body_sha256",
+    "public_title",
+    "public_body"
+  ],
+  "properties": {
+    "version": { "const": 2 },
+    "kind": { "const": "ROUND_POST" },
+    "state_id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*-r[0-9]{3}$" },
+    "state_commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "post_id": { "type": "integer", "minimum": 1 },
+    "activation_author": { "const": "bounded-curiosity" },
+    "activation_created_at": { "type": "string", "format": "date-time" },
+    "relay_proposal_id": { "type": "string", "pattern": "^active-[0-9]{8}-[0-9]{4}-[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "relay_pull_request": { "type": "integer", "minimum": 1 },
+    "relay_merge_commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "public_title_bytes": { "type": "integer", "minimum": 1 },
+    "public_title_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "public_body_bytes": { "type": "integer", "minimum": 1 },
+    "public_body_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "public_title": { "type": "string", "minLength": 1 },
+    "public_body": { "type": "string", "minLength": 1 }
+  }
+}

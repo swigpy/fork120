@@ -1,12 +1,13 @@
 # Continuity ledger
 
-**Status: active exactly when `canon/activations/chapter-zero-r000.json` is valid and reachable from `main`; the receipt preserves `861d5d7… / c35281`.**
+**Status: R003 reference ledger. The exact active pair is preserved by `canon/activations/chapter-zero-r003.json`; v3 states become the machine-readable authority prospectively from R004.**
 
 The active ledger contains at most twelve compact rows. Detailed history remains in source states and comments. Removing a row requires an explicit `TRANSFORMED`, `RESOLVED`, or `DORMANT` delta.
 
 | Id | Kind | Status after R003 | Durable fact | First source |
 |---|---|---|---|---|
 | `orra` | place/community | ACTIVE | The travelling city has failed to reach the sea for the first recorded time. | c35281 |
+| `salt-wells` | resource/threat | ACTIVE | Salt fills every well although the sea lies beyond the mountains; the Wells clock already stands at 2/4. | c35281 |
 | `mara` | character | ACTIVE | Youngest mapmaker; used salt water and the ORRA scrap to reveal a streetless room inside a hollow whale rib and the older matching footprint across the bridge. | c35281, c35282, c35449, c37680, c38891, c38913, c38916 |
 | `edda` | character | dormant seed | Keeper of the salt wells; no additional motive established yet. | region seed only |
 | `rib-guild` | collective | ACTIVE | Digging toward the whale's heart; a sealed heartward tunnel on the walker's route lies beyond a door they have not opened. | c35281, c37680 |
@@ -25,4 +26,6 @@ The active ledger contains at most twelve compact rows. Detailed history remains
 - `TRANSFORMED`: identity or function changed; both old and new forms stay traceable.
 - `RESOLVED`: its open conflict ended, while the historical fact remains true.
 
-Only ids present in a canonical state's `ledger_delta` count toward the twelve-row active bound. A region seed may remain outside active canon until introduced by a valid move. A summary never overrides a source; conflicts must be repaired publicly.
+Through R003, `ledger_delta` recorded the rows touched by that settlement and did not provide a reliable complete snapshot. The v0.3 migration baseline therefore consolidates every established active row above, including `salt-wells`; this is a tracking correction, not new fiction.
+
+From the first valid v3 state, `ledger_state` is the complete status snapshot, `ledger_changes` is the sourced change set, and only `ACTIVE` rows count toward the twelve-row play budget. A region seed may remain outside active canon until introduced by a valid move. A summary never overrides a source; conflicts must be repaired publicly.
