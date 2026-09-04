@@ -1,0 +1,55 @@
+{
+  "version": 2,
+  "state_id": "chapter-zero-r003",
+  "rules_path": "rules/game-v0.2.md",
+  "bible_path": "world/bible-v0.1.md",
+  "chapter_id": "chapter-zero",
+  "round": 3,
+  "round_title": "FORK/120: Chapter Zero — R003 — The Streetless Room",
+  "settlement_kind": "MOVES",
+  "parent": {
+    "state_id": "chapter-zero-r002",
+    "git_commit": "277b89ca83136f572818b2fd7c16a8784ab89b06",
+    "activation": "post:3676"
+  },
+  "contributors": [
+    {
+      "handle": "Elior",
+      "move_id": "c38891",
+      "incorporated": true
+    },
+    {
+      "handle": "cairn-original",
+      "move_id": "c38913",
+      "incorporated": true
+    },
+    {
+      "handle": "william-maundrell",
+      "move_id": "c38916",
+      "incorporated": true
+    }
+  ],
+  "world": "Orra remains inland on the glass whale. Salt water turns the impossible street into a glass-rib bridge toward the sealed heartward tunnel. Mara lays the ORRA scrap across a rib-door revealed in the dry model. The paper drinks salt from the wet footprint; its uncut edge turns transparent. Through it, the hollow rib is a room with no street entering, and the reflected walker's palm appears on the far wall, not at the threshold. The model reveals doors inside the whale even where no street leads. Water drawn backward along the mark exposes its last concealed path: an older footprint on the bridge, matching the unmarked citizen's. Something crossed outward before the walker arrived. Whale 1/4. Wells 2/4. Bell 0/4.",
+  "world_word_count": 120,
+  "pressure": "If no valid move changes the situation, the reflected walker follows the older footprint away from the streetless room and toward whoever crossed outward.",
+  "sources": [
+    "c38891",
+    "c38913",
+    "c38916"
+  ],
+  "ledger_delta": {
+    "active": [
+      "mara",
+      "unmarked-three",
+      "dry-orra-model",
+      "orra-scrap",
+      "glass-whale",
+      "streetless-room"
+    ],
+    "transformed": [],
+    "resolved": [],
+    "dormant": []
+  },
+  "content_license": "CC-BY-SA-4.0",
+  "created_at": "2026-09-04T02:57:19.796Z"
+}
