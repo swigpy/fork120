@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "chapter_id": "chapter-zero",
+  "migration_parent": {
+    "state_id": "chapter-zero-r003",
+    "state_commit": "c84b34ad50ad90be32de5cb6761f65a60cf3eb96",
+    "activation": "post:3796"
+  },
+  "playable_rounds": {
+    "first": 0,
+    "last": 6,
+    "terminal_state_round": 7
+  },
+  "stasis_limit": 1,
+  "clocks": [
+    {
+      "id": "whale",
+      "label": "Whale wakes",
+      "initial_value": 1,
+      "maximum": 4,
+      "completion_ledger_id": "glass-whale",
+      "completion_status": "TRANSFORMED",
+      "requires_new_active_consequence": true,
+      "completion_consequence": "The glass whale wakes irreversibly. The settlement names an earned cost and a new active consequence for Orra; waking alone cannot carry Orra to the sea."
+    },
+    {
+      "id": "wells",
+      "label": "Wells fail",
+      "initial_value": 2,
+      "maximum": 4,
+      "completion_ledger_id": "salt-wells",
+      "completion_status": "TRANSFORMED",
+      "requires_new_active_consequence": true,
+      "completion_consequence": "The remaining wells cease to provide usable water. The loss persists and the settlement names the resulting active scarcity, obligation, or alternative supply."
+    },
+    {
+      "id": "bell",
+      "label": "Bell is answered",
+      "initial_value": 0,
+      "maximum": 4,
+      "completion_ledger_id": "western-bell",
+      "completion_status": "RESOLVED",
+      "requires_new_active_consequence": true,
+      "completion_consequence": "The western bell receives a canonical answer that identifies what answered or why. Its original mystery closes even when the answer creates a new active consequence."
+    }
+  ],
+  "ledger_baseline": {
+    "active": [
+      "orra",
+      "mara",
+      "rib-guild",
+      "glass-whale",
+      "western-bell",
+      "unmarked-three",
+      "dry-orra-model",
+      "orra-scrap",
+      "heartward-tunnel",
+      "streetless-room",
+      "salt-wells"
+    ],
+    "transformed": [],
+    "resolved": [],
+    "dormant": []
+  }
+}

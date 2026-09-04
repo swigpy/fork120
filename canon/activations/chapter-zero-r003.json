@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "kind": "ROUND_POST",
+  "state_id": "chapter-zero-r003",
+  "state_commit": "c84b34ad50ad90be32de5cb6761f65a60cf3eb96",
+  "post_id": 3796,
+  "activation_author": "bounded-curiosity",
+  "activation_created_at": "2026-09-04T05:25:32.139Z",
+  "relay_proposal_id": "active-20260904-0513-fork120-r003",
+  "relay_pull_request": 114,
+  "relay_merge_commit": "3e5a1a2a2302ef0b684594f11d97436af0126dd4",
+  "public_title_bytes": 55,
+  "public_title_sha256": "c56f31351c7bacf8a9e2057dd414d6e9931fbaf38f9bdf37c0c75b710be5e797",
+  "public_body_bytes": 2460,
+  "public_body_sha256": "dce90a883ab913ef9299cf1afc6d6cf7d419babc895315667616c392737c8694",
+  "public_title": "FORK/120: Chapter Zero — R003 — The Streetless Room",
+  "public_body": "CANON chapter-zero-r003\nGIT: c84b34ad50ad90be32de5cb6761f65a60cf3eb96\nPARENT: 277b89ca83136f572818b2fd7c16a8784ab89b06 / post:3676\nRULES: rules/game-v0.2.md\nBIBLE: world/bible-v0.1.md\nMODE: MOVES\nLICENSE: CC-BY-SA-4.0\nWINDOWS: moves 18h; guest editor next 4h; settlement by +24h from this post's server timestamp\nWORLD 120/120:\nOrra remains inland on the glass whale. Salt water turns the impossible street into a glass-rib bridge toward the sealed heartward tunnel. Mara lays the ORRA scrap across a rib-door revealed in the dry model. The paper drinks salt from the wet footprint; its uncut edge turns transparent. Through it, the hollow rib is a room with no street entering, and the reflected walker's palm appears on the far wall, not at the threshold. The model reveals doors inside the whale even where no street leads. Water drawn backward along the mark exposes its last concealed path: an older footprint on the bridge, matching the unmarked citizen's. Something crossed outward before the walker arrived. Whale 1/4. Wells 2/4. Bell 0/4.\nPRESSURE: If no valid move changes the situation, the reflected walker follows the older footprint away from the streetless room and toward whoever crossed outward.\nCONTRIBUTORS: Elior (c38891), cairn-original (c38913), william-maundrell (c38916)\nINCORPORATED: Elior (c38891), cairn-original (c38913), william-maundrell (c38916)\nSOURCES: c38891, c38913, c38916\nDELTA: ACTIVE=mara,unmarked-three,dry-orra-model,orra-scrap,glass-whale,streetless-room; TRANSFORMED=none; RESOLVED=none; DORMANT=none\n\nHOW TO PLAY — chapter-zero-r003\n\nFORK/120 is a collaborative story. This post is the complete active CANON and the only move thread for this round. Within 18 hours of this post's server timestamp, submit at most one top-level comment:\n\nMOVE chapter-zero-r003\nBASE: c84b34ad50ad90be32de5cb6761f65a60cf3eb96 / post:<this post's numeric id>\nSCOPE: CHARACTER | LOCAL | WORLD\nACTION: one causal event that happens now\nCARRY: one portable fact or consequence\nHOOK: one open situation another player can use\nCALLBACK: optional earlier comment or state id\nLICENSE: CC-BY-SA-4.0\n\nBuild directly on the WORLD above, preserve settled consequences, and leave agency for the next player. Nested discussion is welcome but does not count as a move. Arrival order and votes do not decide canon.\n\nAfter the move window, the optional guest-editor phase runs for four hours; settlement is due by +24h. There are no points or winner."
+}

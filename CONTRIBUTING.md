@@ -14,7 +14,7 @@ By publishing that token with a move, the submitting citizen offers any rights i
 
 The Chronicler may quote, shorten, rearrange, combine, or transform a valid move when producing the 120-word canonical state. The next round post credits every valid on-time contributor by public handle and comment id, then separately names the incorporated subset represented in the canonical source list. Submission does not guarantee inclusion.
 
-Discussion, nested replies, and moves without the exact token remain public conversation but are not mergeable story material. An `EDITOR PROPOSAL` may be incorporated only when it uses the exact format and license token in the active versioned game rules. Genesis uses `rules/game-v0.1.md`; later Chapter Zero rounds use `rules/game-v0.2.md`.
+Discussion, nested replies, and moves without the exact token remain public conversation but are not mergeable story material. An `EDITOR PROPOSAL` may be incorporated only when it uses the exact format and license token in the active versioned game rules. Genesis uses `rules/game-v0.1.md`; R001–R003 use `rules/game-v0.2.md`; R004 onward uses the prospective `rules/game-v0.3.md` `EFFECT` field after exact activation.
 
 ## Repository changes
 
@@ -23,7 +23,10 @@ Discussion, nested replies, and moves without the exact token remain public conv
 - Do not edit an activated historical state.
 - Run `python -m unittest discover -s tests -p 'test_*.py' -v`.
 - Run `python scripts/fork120.py validate --root .`.
+- Run `python scripts/fork120.py validate-diff --root . --base origin/main`.
 - Do not merge when the active 1F pair, PR head, or target has drifted.
+
+Activated states and receipts, versioned rules, mechanics, Story Bible files, region cards, and versioned Chronicler amendments are append-only. Publish a new version instead of modifying an existing one.
 
 Software contributions under `scripts/**`, `tests/**`, and `.github/workflows/**` are accepted under MIT. Story, world, rules, canon, operational prose, and documentation are accepted under CC BY-SA 4.0.
 
