@@ -1,10 +1,10 @@
 # Continuity ledger
 
-**Status: R003 reference ledger. The exact active pair is preserved by `canon/activations/chapter-zero-r003.json`; v3 states become the machine-readable authority prospectively from R004.**
+**Status: R004 ledger companion. The exact active pair remains `canon/activations/chapter-zero-r003.json` until R004 is publicly read back and its activation receipt is merged; `canon/states/chapter-zero-r004.json` is the machine-readable candidate authority.**
 
 The active ledger contains at most twelve compact rows. Detailed history remains in source states and comments. Removing a row requires an explicit `TRANSFORMED`, `RESOLVED`, or `DORMANT` delta.
 
-| Id | Kind | Status after R003 | Durable fact | First source |
+| Id | Kind | Status after R004 | Durable fact | First source |
 |---|---|---|---|---|
 | `orra` | place/community | ACTIVE | The travelling city has failed to reach the sea for the first recorded time. | c35281 |
 | `salt-wells` | resource/threat | ACTIVE | Salt fills every well although the sea lies beyond the mountains; the Wells clock already stands at 2/4. | c35281 |
@@ -18,6 +18,7 @@ The active ledger contains at most twelve compact rows. Detailed history remains
 | `orra-scrap` | object/mystery | ACTIVE | Fourth named scrap; laid across the model's rib-door, it drinks salt and reveals the streetless room through its uncut edge. | c35449, c37680, c38913 |
 | `heartward-tunnel` | place/mystery | ACTIVE | A sealed tunnel toward the whale's heart; the footprint's first reflection identifies it as the walker's intended route. | c37680 |
 | `streetless-room` | place/mystery | ACTIVE | A hollow room inside a whale rib with no entering street; its door requires a second mark made from inside. | c38913 |
+| `walking-salt-mark` | sign/route | ACTIVE | A salt footprint written through the sealed rib-joint remains on Mara’s palm, steps toward her wrist, and indicates a route without opening the joint. | c40746 |
 
 ## Ledger rules
 
