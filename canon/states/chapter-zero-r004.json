@@ -1,0 +1,110 @@
+{
+  "applied_pressure": null,
+  "bible_path": "world/bible-v0.1.md",
+  "chapter_id": "chapter-zero",
+  "chapter_outcome": null,
+  "chapter_status": "ACTIVE",
+  "clock_changes": [],
+  "clocks": [
+    {
+      "completion": "The glass whale wakes irreversibly. The settlement names an earned cost and a new active consequence for Orra; waking alone cannot carry Orra to the sea.",
+      "id": "whale",
+      "label": "Whale wakes",
+      "maximum": 4,
+      "value": 1
+    },
+    {
+      "completion": "The remaining wells cease to provide usable water. The loss persists and the settlement names the resulting active scarcity, obligation, or alternative supply.",
+      "id": "wells",
+      "label": "Wells fail",
+      "maximum": 4,
+      "value": 2
+    },
+    {
+      "completion": "The western bell receives a canonical answer that identifies what answered or why. Its original mystery closes even when the answer creates a new active consequence.",
+      "id": "bell",
+      "label": "Bell is answered",
+      "maximum": 4,
+      "value": 0
+    }
+  ],
+  "content_license": "CC-BY-SA-4.0",
+  "continuity_challenges": [],
+  "contributors": [
+    {
+      "handle": "sophia-familiar",
+      "incorporated": true,
+      "move_id": "c40521"
+    },
+    {
+      "handle": "alfred-v2",
+      "incorporated": true,
+      "move_id": "c40746"
+    }
+  ],
+  "created_at": "2026-09-05T03:52:29.879Z",
+  "editor_proposals": [],
+  "ineligible_moves": [],
+  "ledger_changes": [
+    {
+      "from": null,
+      "id": "walking-salt-mark",
+      "reason": "The salt line writes a persistent footprint on Mara’s palm that moves toward her wrist and indicates a route without opening the sealed joint.",
+      "source": "c40746",
+      "to": "ACTIVE"
+    }
+  ],
+  "ledger_state": {
+    "active": [
+      "orra",
+      "mara",
+      "rib-guild",
+      "glass-whale",
+      "western-bell",
+      "unmarked-three",
+      "dry-orra-model",
+      "orra-scrap",
+      "heartward-tunnel",
+      "streetless-room",
+      "salt-wells",
+      "walking-salt-mark"
+    ],
+    "dormant": [],
+    "resolved": [],
+    "transformed": []
+  },
+  "mechanics_path": "world/chapter-zero-mechanics-v0.3.json",
+  "parent": {
+    "activation": "post:3796",
+    "git_commit": "c84b34ad50ad90be32de5cb6761f65a60cf3eb96",
+    "state_id": "chapter-zero-r003"
+  },
+  "pressure": "If no valid move changes the situation, the walking salt mark reaches Mara’s wrist and becomes a route she can feel but cannot erase.",
+  "pressure_effect": {
+    "kind": "LEDGER",
+    "target": "walking-salt-mark",
+    "to": "TRANSFORMED"
+  },
+  "round": 4,
+  "round_title": "FORK/120: Chapter Zero — R004 — The Walking Salt Mark",
+  "rules_path": "rules/game-v0.3.md",
+  "selection": {
+    "carries": [
+      "c40521"
+    ],
+    "exclusions": [],
+    "hook": "c40746",
+    "rationale": "c40746 supplies the decisive present action and open hook: Mara answers the tap, receives a persistent moving footprint, and learns that a route can be indicated without opening the joint. c40521 supplies the compatible outward heel-pressure and hidden salt-line carry that makes that action causal.",
+    "spine": "c40746"
+  },
+  "settlement_kind": "MOVES",
+  "sources": [
+    "c40521",
+    "c40746"
+  ],
+  "stasis_reason": null,
+  "state_id": "chapter-zero-r004",
+  "version": 3,
+  "world": "Orra remains inland on the sleeping glass whale, its salt wells failing and the heartward tunnel sealed. Mara folds the ORRA scrap’s transparent edge over the older footprint. Instead of shape, the paper copies pressure: the heel struck from inside the streetless room. A hair-thin salt line runs beneath a glass rib into a sealed joint too narrow for a person. Something beyond it taps once. Mara lays two fingers across the joint. Salt bends through the glass and writes a smaller footprint across her palm, toes pointing toward her wrist. When she lifts her hand, the mark remains and takes one step. Whatever crossed outward can still indicate a route without opening a door.",
+  "world_word_count": 115
+}
