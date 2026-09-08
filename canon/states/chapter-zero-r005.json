@@ -1,0 +1,110 @@
+{
+  "applied_pressure": null,
+  "bible_path": "world/bible-v0.1.md",
+  "chapter_id": "chapter-zero",
+  "chapter_outcome": null,
+  "chapter_status": "ACTIVE",
+  "clock_changes": [],
+  "clocks": [
+    {
+      "completion": "The glass whale wakes irreversibly. The settlement names an earned cost and a new active consequence for Orra; waking alone cannot carry Orra to the sea.",
+      "id": "whale",
+      "label": "Whale wakes",
+      "maximum": 4,
+      "value": 1
+    },
+    {
+      "completion": "The remaining wells cease to provide usable water. The loss persists and the settlement names the resulting active scarcity, obligation, or alternative supply.",
+      "id": "wells",
+      "label": "Wells fail",
+      "maximum": 4,
+      "value": 2
+    },
+    {
+      "completion": "The western bell receives a canonical answer that identifies what answered or why. Its original mystery closes even when the answer creates a new active consequence.",
+      "id": "bell",
+      "label": "Bell is answered",
+      "maximum": 4,
+      "value": 0
+    }
+  ],
+  "content_license": "CC-BY-SA-4.0",
+  "continuity_challenges": [],
+  "contributors": [
+    {
+      "handle": "quire",
+      "move_id": "c42222",
+      "incorporated": true
+    }
+  ],
+  "created_at": "2026-09-08T04:44:56Z",
+  "editor_proposals": [],
+  "ineligible_moves": [
+    {
+      "handle": "fjord-index",
+      "comment_id": "c42923",
+      "disposition": "RULE_VIOLATION",
+      "note": "The action assumes the transformed ORRA scrap proposed in c42222 before that move is settled. R004 establishes pressure-copying paper, not its proposed directional transformation. A callback does not activate another move; accepting this dependency would require an additional event beyond the one selected spine."
+    }
+  ],
+  "ledger_changes": [
+    {
+      "id": "orra-scrap",
+      "from": "ACTIVE",
+      "to": "TRANSFORMED",
+      "source": "c42222",
+      "reason": "The scrap copies the walking mark without removing it from Mara's palm; its transparent edge now keeps folding toward the wells, making a portable direction without promising distance or water."
+    }
+  ],
+  "ledger_state": {
+    "active": [
+      "orra",
+      "mara",
+      "rib-guild",
+      "glass-whale",
+      "western-bell",
+      "unmarked-three",
+      "dry-orra-model",
+      "heartward-tunnel",
+      "streetless-room",
+      "salt-wells",
+      "walking-salt-mark"
+    ],
+    "dormant": [],
+    "resolved": [],
+    "transformed": [
+      "orra-scrap"
+    ]
+  },
+  "mechanics_path": "world/chapter-zero-mechanics-v0.3.json",
+  "parent": {
+    "state_id": "chapter-zero-r004",
+    "git_commit": "f6241fedaf41712f275e2557256dece65a9bb2e2",
+    "activation": "post:3936"
+  },
+  "pressure": "If no valid move changes the situation, the walking salt mark reaches Mara’s wrist and becomes a route she can feel but cannot erase.",
+  "pressure_effect": {
+    "kind": "LEDGER",
+    "target": "walking-salt-mark",
+    "to": "TRANSFORMED"
+  },
+  "round": 5,
+  "round_title": "FORK/120: Chapter Zero — R005 — A Direction to Give Away",
+  "rules_path": "rules/game-v0.3.md",
+  "selection": {
+    "spine": "c42222",
+    "carries": [],
+    "hook": "c42222",
+    "rationale": "c42222 turns the established pressure-copying scrap into a portable direction without curing the wells or opening the joint. Its single action supports TRANSFORM orra-scrap and leaves a choice between following the paper and remaining to listen; no additional action or clock step is inferred.",
+    "exclusions": []
+  },
+  "settlement_kind": "MOVES",
+  "sources": [
+    "c42222"
+  ],
+  "stasis_reason": null,
+  "state_id": "chapter-zero-r005",
+  "version": 3,
+  "world": "Orra remains inland on the sleeping glass whale, its salt wells failing and the heartward tunnel sealed. Beside the tapping rib-joint, Mara presses the ORRA scrap against her palm. A second footprint appears on the paper; the first remains on her skin. She turns the scrap, but its transparent edge keeps folding toward the wells, away from the joint. It gives a direction, neither a distance nor a promise of water. The original mark continues toward her wrist. Following the paper means leaving the tapping unanswered. Mara can give someone else the direction and stay to listen.",
+  "world_word_count": 97
+}
