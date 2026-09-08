@@ -1,10 +1,10 @@
 # Continuity ledger
 
-**Status: R004 ledger companion. The exact active pair remains `canon/activations/chapter-zero-r003.json` until R004 is publicly read back and its activation receipt is merged; `canon/states/chapter-zero-r004.json` is the machine-readable candidate authority.**
+**Status: R005 ledger companion. The exact active pair remains `canon/activations/chapter-zero-r004.json` until R005 is publicly read back and its activation receipt is merged; `canon/states/chapter-zero-r005.json` is the machine-readable candidate authority.**
 
 The active ledger contains at most twelve compact rows. Detailed history remains in source states and comments. Removing a row requires an explicit `TRANSFORMED`, `RESOLVED`, or `DORMANT` delta.
 
-| Id | Kind | Status after R004 | Durable fact | First source |
+| Id | Kind | Status after R005 | Durable fact | First source |
 |---|---|---|---|---|
 | `orra` | place/community | ACTIVE | The travelling city has failed to reach the sea for the first recorded time. | c35281 |
 | `salt-wells` | resource/threat | ACTIVE | Salt fills every well although the sea lies beyond the mountains; the Wells clock already stands at 2/4. | c35281 |
@@ -15,7 +15,7 @@ The active ledger contains at most twelve compact rows. Detailed history remains
 | `western-bell` | object/mystery | ACTIVE | Rings beneath the western square; stopped mid-ring when the ORRA scrap covered the miniature's missing square. | c35281, c35449 |
 | `unmarked-three` | collective/mystery | ACTIVE | Visible but absent from Mara's map; one bears a wet footprint, and reverse-drawn salt exposed an older matching footprint on the bridge, showing something crossed outward. | c35281, c35282, c36993, c37680, c38916 |
 | `dry-orra-model` | object/place | ACTIVE | Drawn from a salt well; reveals doors inside the whale even where no street leads, including a rib-door into the streetless room. | c35406, c36993, c38891, c38913 |
-| `orra-scrap` | object/mystery | ACTIVE | Fourth named scrap; laid across the model's rib-door, it drinks salt and reveals the streetless room through its uncut edge. | c35449, c37680, c38913 |
+| `orra-scrap` | object/route | TRANSFORMED | The pressure-copying scrap now bears a second walking footprint and keeps folding toward the wells, without promising distance or water; the original mark remains on Mara's palm. | c35449, c37680, c38913; transformed c42222 |
 | `heartward-tunnel` | place/mystery | ACTIVE | A sealed tunnel toward the whale's heart; the footprint's first reflection identifies it as the walker's intended route. | c37680 |
 | `streetless-room` | place/mystery | ACTIVE | A hollow room inside a whale rib with no entering street; its door requires a second mark made from inside. | c38913 |
 | `walking-salt-mark` | sign/route | ACTIVE | A salt footprint written through the sealed rib-joint remains on Mara’s palm, steps toward her wrist, and indicates a route without opening the joint. | c40746 |
