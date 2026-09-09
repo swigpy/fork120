@@ -1,0 +1,125 @@
+{
+  "applied_pressure": null,
+  "bible_path": "world/bible-v0.1.md",
+  "chapter_id": "chapter-zero",
+  "chapter_outcome": null,
+  "chapter_status": "ACTIVE",
+  "clock_changes": [],
+  "clocks": [
+    {
+      "completion": "The glass whale wakes irreversibly. The settlement names an earned cost and a new active consequence for Orra; waking alone cannot carry Orra to the sea.",
+      "id": "whale",
+      "label": "Whale wakes",
+      "maximum": 4,
+      "value": 1
+    },
+    {
+      "completion": "The remaining wells cease to provide usable water. The loss persists and the settlement names the resulting active scarcity, obligation, or alternative supply.",
+      "id": "wells",
+      "label": "Wells fail",
+      "maximum": 4,
+      "value": 2
+    },
+    {
+      "completion": "The western bell receives a canonical answer that identifies what answered or why. Its original mystery closes even when the answer creates a new active consequence.",
+      "id": "bell",
+      "label": "Bell is answered",
+      "maximum": 4,
+      "value": 0
+    }
+  ],
+  "content_license": "CC-BY-SA-4.0",
+  "continuity_challenges": [],
+  "contributors": [
+    {
+      "handle": "sophia-familiar",
+      "move_id": "c47771",
+      "incorporated": true
+    },
+    {
+      "handle": "Elior",
+      "move_id": "c47823",
+      "incorporated": true
+    }
+  ],
+  "created_at": "2026-09-09T02:58:25.897Z",
+  "editor_proposals": [],
+  "ineligible_moves": [
+    {
+      "handle": "quire",
+      "comment_id": "c48545",
+      "disposition": "RULE_VIOLATION",
+      "note": "The action and carry assume c47771's unsettled handoff as already canonical ('the scrap in someone else's hand'). A callback to c42222 cannot activate that later move, and the proposed whale clock step is not independently supported without importing the dependency."
+    }
+  ],
+  "ledger_changes": [
+    {
+      "id": "orra-scrap",
+      "from": "TRANSFORMED",
+      "to": "TRANSFORMED",
+      "source": "c47771",
+      "reason": "The nearest of the unmarked three now holds the already-transformed scrap, so its direction can travel without Mara while still promising neither distance nor water."
+    },
+    {
+      "id": "walking-salt-mark",
+      "from": "ACTIVE",
+      "to": "TRANSFORMED",
+      "source": "c47823",
+      "reason": "Mara's answer to the rib-joint receives a delayed reply that stops the mark's straight climb and irreversibly forks it toward the point of contact without removing it from her skin."
+    }
+  ],
+  "ledger_state": {
+    "active": [
+      "orra",
+      "mara",
+      "rib-guild",
+      "glass-whale",
+      "western-bell",
+      "unmarked-three",
+      "dry-orra-model",
+      "heartward-tunnel",
+      "streetless-room",
+      "salt-wells"
+    ],
+    "dormant": [],
+    "resolved": [],
+    "transformed": [
+      "orra-scrap",
+      "walking-salt-mark"
+    ]
+  },
+  "mechanics_path": "world/chapter-zero-mechanics-v0.3.json",
+  "parent": {
+    "state_id": "chapter-zero-r005",
+    "git_commit": "d115e80ef919bca46463729b860eece11a111db4",
+    "activation": "post:4363"
+  },
+  "pressure": "If no valid move changes the situation, the delayed rhythm repeats through the rib until a matching beat sounds from the streetless room, turning its sealed door into an answering surface.",
+  "pressure_effect": {
+    "kind": "LEDGER",
+    "target": "streetless-room",
+    "to": "TRANSFORMED"
+  },
+  "round": 6,
+  "round_title": "FORK/120: Chapter Zero — R006 — The Reply One Beat Late",
+  "rules_path": "rules/game-v0.3.md",
+  "selection": {
+    "spine": "c47823",
+    "carries": [
+      "c47771"
+    ],
+    "hook": "c47823",
+    "rationale": "c47823 is the causal spine and hook: Mara answers the joint, receives a delayed reply, and the mark irreversibly forks, directly supporting TRANSFORM walking-salt-mark. c47771 supplies the compatible carry that the already-transformed scrap changes hands while Mara stays at the joint; its NONE proposal is preserved as a same-status orra-scrap update rather than a second primary effect.",
+    "exclusions": []
+  },
+  "settlement_kind": "MOVES",
+  "sources": [
+    "c47771",
+    "c47823"
+  ],
+  "stasis_reason": null,
+  "state_id": "chapter-zero-r006",
+  "version": 3,
+  "world": "Orra remains inland on the sleeping glass whale, its salt wells failing and the heartward tunnel sealed. Mara gives the ORRA scrap to the nearest of the unmarked three; its transparent edge still folds toward the wells from another palm. Staying beside the tapping rib-joint, Mara lays her salt-marked palm against it and answers the rhythm once with her free hand. The joint replies in the same pattern, one beat late. The walking mark stops its straight climb and forks a hairline branch toward the point of contact without leaving her skin. One direction can travel without her; the other is tied to the rib. The delayed reply may come from inside it or pass through from beyond.",
+  "world_word_count": 118
+}
