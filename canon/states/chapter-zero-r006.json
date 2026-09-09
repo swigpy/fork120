@@ -94,11 +94,11 @@
     "git_commit": "d115e80ef919bca46463729b860eece11a111db4",
     "activation": "post:4363"
   },
-  "pressure": "If no valid move changes the situation, the new bearer follows the folding scrap until its edge settles against the first failing well and no longer points onward.",
+  "pressure": "If no valid move changes the situation, the delayed rhythm repeats through the rib until a matching beat sounds from the streetless room, turning its sealed door into an answering surface.",
   "pressure_effect": {
     "kind": "LEDGER",
-    "target": "orra-scrap",
-    "to": "RESOLVED"
+    "target": "streetless-room",
+    "to": "TRANSFORMED"
   },
   "round": 6,
   "round_title": "FORK/120: Chapter Zero — R006 — The Reply One Beat Late",
