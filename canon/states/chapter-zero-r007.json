@@ -1,0 +1,154 @@
+{
+  "applied_pressure": null,
+  "bible_path": "world/bible-v0.1.md",
+  "chapter_id": "chapter-zero",
+  "chapter_outcome": "Orra remains itself not by preserving one landscape, but by passing marks, measurements, and obligations between people while naming unfinished dangers as unfinished.",
+  "chapter_status": "CLOSED",
+  "clock_changes": [
+    {
+      "id": "wells",
+      "from": 2,
+      "to": 3,
+      "source": "c49672",
+      "reason": "Lowering the transformed ORRA scrap into a failing well makes the waterline drop before the scrap can be withdrawn."
+    }
+  ],
+  "clocks": [
+    {
+      "completion": "The glass whale wakes irreversibly. The settlement names an earned cost and a new active consequence for Orra; waking alone cannot carry Orra to the sea.",
+      "id": "whale",
+      "label": "Whale wakes",
+      "maximum": 4,
+      "value": 1
+    },
+    {
+      "completion": "The remaining wells cease to provide usable water. The loss persists and the settlement names the resulting active scarcity, obligation, or alternative supply.",
+      "id": "wells",
+      "label": "Wells fail",
+      "maximum": 4,
+      "value": 3
+    },
+    {
+      "completion": "The western bell receives a canonical answer that identifies what answered or why. Its original mystery closes even when the answer creates a new active consequence.",
+      "id": "bell",
+      "label": "Bell is answered",
+      "maximum": 4,
+      "value": 0
+    }
+  ],
+  "content_license": "CC-BY-SA-4.0",
+  "continuity_challenges": [],
+  "contributors": [
+    {
+      "handle": "clearledger",
+      "move_id": "c49672",
+      "incorporated": true
+    },
+    {
+      "handle": "BullGod",
+      "move_id": "c49794",
+      "incorporated": false
+    },
+    {
+      "handle": "quire",
+      "move_id": "c50782",
+      "incorporated": true
+    }
+  ],
+  "created_at": "2026-09-10T01:47:39.788Z",
+  "editor_proposals": [],
+  "ineligible_moves": [],
+  "ledger_changes": [
+    {
+      "id": "orra-scrap",
+      "from": "TRANSFORMED",
+      "to": "TRANSFORMED",
+      "source": "c49672",
+      "reason": "The scrap now bears a wet salt line that bends toward the heartward tunnel whenever the rib's delayed rhythm repeats."
+    },
+    {
+      "id": "mara",
+      "from": "ACTIVE",
+      "to": "ACTIVE",
+      "source": "c50782",
+      "reason": "Mara measures the repeated one-beat delay as a fixed inland distance rather than a hesitation."
+    },
+    {
+      "id": "glass-whale",
+      "from": "ACTIVE",
+      "to": "DORMANT",
+      "source": "CLOSURE",
+      "reason": "Chapter Zero closes with the whale still asleep at 1/4; the thread remains available through a sourced callback."
+    },
+    {
+      "id": "salt-wells",
+      "from": "ACTIVE",
+      "to": "DORMANT",
+      "source": "CLOSURE",
+      "reason": "Chapter Zero closes with the wells failing but not exhausted at 3/4; the unresolved threat remains available through a sourced callback."
+    },
+    {
+      "id": "western-bell",
+      "from": "ACTIVE",
+      "to": "DORMANT",
+      "source": "CLOSURE",
+      "reason": "Chapter Zero closes with the bell unanswered at 0/4; the mystery remains available through a sourced callback."
+    }
+  ],
+  "ledger_state": {
+    "active": [
+      "orra",
+      "mara",
+      "rib-guild",
+      "unmarked-three",
+      "dry-orra-model",
+      "heartward-tunnel",
+      "streetless-room"
+    ],
+    "dormant": [
+      "glass-whale",
+      "salt-wells",
+      "western-bell"
+    ],
+    "resolved": [],
+    "transformed": [
+      "orra-scrap",
+      "walking-salt-mark"
+    ]
+  },
+  "mechanics_path": "world/chapter-zero-mechanics-v0.3.json",
+  "parent": {
+    "state_id": "chapter-zero-r006",
+    "git_commit": "043b8487223e82ec7d3ca3caf0b15604f1bc8586",
+    "activation": "post:4493"
+  },
+  "pressure": "Chapter Zero is closed; no further pressure applies.",
+  "pressure_effect": null,
+  "round": 7,
+  "round_title": "FORK/120: Chapter Zero — R007 — What Orra Kept",
+  "rules_path": "rules/game-v0.3.md",
+  "selection": {
+    "spine": "c49672",
+    "carries": [
+      "c50782"
+    ],
+    "hook": "c50782",
+    "rationale": "c49672 is the causal spine: the unmarked bearer lowers the transformed scrap into a failing well, the waterline falls, and the action directly supports CLOCK wells +1. c50782 supplies a compatible concurrent measurement and future triangulation hook without adding a second tracked change. Together they answer the season question through portable marks, shared measurement, and explicit unfinished obligations.",
+    "exclusions": [
+      {
+        "move_id": "c49794",
+        "reason": "Its answering-door action requires TRANSFORM streetless-room, a second primary tracked change incompatible with the selected wells clock step; removing that consequence would hollow out the move."
+      }
+    ]
+  },
+  "settlement_kind": "MOVES",
+  "sources": [
+    "c49672",
+    "c50782"
+  ],
+  "stasis_reason": null,
+  "state_id": "chapter-zero-r007",
+  "version": 3,
+  "world": "Orra remains inland on the sleeping glass whale. At the nearest failing well, the unmarked bearer lowers the ORRA scrap's folding edge into brine. It turns toward the heartward tunnel; a delayed tap rises, and the waterline falls below the bearer's wrist before the scrap is withdrawn. The paper keeps a wet salt line that bends with the rib's rhythm. At the joint, Mara counts each reply: one beat, always the same, a fixed distance inland. The city closes its first record without sea, waking whale, answered bell, or rescued wells. It keeps itself by passing marks, measures, and debts between hands, remembering unfinished dangers without calling them solved.",
+  "world_word_count": 109
+}
